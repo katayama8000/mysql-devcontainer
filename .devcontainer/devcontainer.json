@@ -1,0 +1,38 @@
+{
+  "name": "MySQL Dev Environment",
+  "dockerComposeFile": "../compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.remote-repositories",
+        "ms-vscode.remote-containers",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-mysql",
+        "ms-vscode.vscode-json",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "git.confirmSync": false,
+        "git.enableSmartCommit": true,
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+  
+  "postCreateCommand": "git --version && echo 'Git is ready!'",
+  "forwardPorts": [3306],
+  
+  "mounts": [
+    "source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
+  ]
+}
