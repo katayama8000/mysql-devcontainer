@@ -1,0 +1,1 @@
+mysql -h mysql -u root -ppassword -D mydatabase;

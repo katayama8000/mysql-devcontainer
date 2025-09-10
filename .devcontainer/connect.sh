@@ -7,5 +7,5 @@ until mysqladmin ping -h mysql -u root -ppassword --silent; do
 done
 echo "MySQL is ready!"
 
-# Log in to MySQL
-mysql -h mysql -u root -ppassword
+# Connect to MySQL
+./connect_to_mysql.sh
