@@ -3,12 +3,12 @@
   "dockerComposeFile": "../compose.yml",
   "service": "app",
   "workspaceFolder": "/workspace",
-  
+
   "features": {
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  
+
   "customizations": {
     "vscode": {
       "extensions": [
@@ -18,7 +18,7 @@
         "mtxr.sqltools",
         "mtxr.sqltools-driver-mysql",
         "ms-vscode.vscode-json",
-        "esbenp.prettier-vscode"
+        "bierner.markdown-mermaid"
       ],
       "settings": {
         "git.confirmSync": false,
@@ -27,7 +27,7 @@
       }
     }
   },
-  
+
   "forwardPorts": [3306],
   "postCreateCommand": "sh .devcontainer/connect.sh",
 
