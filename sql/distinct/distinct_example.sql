@@ -17,7 +17,7 @@ CREATE TABLE sales_data (
 
 -- ダミーデータを挿入します
 INSERT INTO sales_data (product_name, region, sale_date)
-VALUES
+
     ('Laptop', 'North America', '2024-01-15'),
     ('Keyboard', 'Europe', '2024-01-16'),
     ('Mouse', 'North America', '2024-01-17'),
