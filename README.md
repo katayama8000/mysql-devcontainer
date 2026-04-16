@@ -5,7 +5,34 @@ command + shift + p
 Rebuild Container
 ```
 
-## connect to mysql
+## make commands
+
+| command                | description                    |
+| ---------------------- | ------------------------------ |
+| `make up`              | start containers               |
+| `make down`            | stop and remove containers     |
+| `make restart`         | restart containers             |
+| `make mysql`           | connect to MySQL interactively |
+| `make sql FILE=<path>` | execute a SQL file             |
+| `make logs`            | tail MySQL logs                |
+| `make ps`              | show container status          |
+
+```bash
+# start
+make up
+
+# connect interactively
+make mysql
+
+# how to exit mysql
+exit;
+
+# execute a SQL file
+make sql FILE=sql/insert_100_users.sql
+make sql FILE=sql/cte/basic_cte_example.sql
+```
+
+## connect to mysql (inside devContainer)
 
 ```bash
 mysql -h mysql -u root -p
@@ -52,14 +79,14 @@ The SQL query in `sql/recursive_query/validate_query.sql` is designed to find al
 
 Here's a breakdown of the query:
 
--   **`WITH RECURSIVE all_descendants(...) AS (...)`**: This defines a Common Table Expression (CTE) named `all_descendants` that can refer to itself. This is what makes the query recursive.
+- **`WITH RECURSIVE all_descendants(...) AS (...)`**: This defines a Common Table Expression (CTE) named `all_descendants` that can refer to itself. This is what makes the query recursive.
 
--   **`SELECT id, parent_issue_id, status_id, id as root_child_id FROM issue WHERE parent_issue_id = 1`**: This is the starting point of the recursion. It selects all direct children of the issue with `id = 1`. The `root_child_id` is set to the `id` of the direct child.
+- **`SELECT id, parent_issue_id, status_id, id as root_child_id FROM issue WHERE parent_issue_id = 1`**: This is the starting point of the recursion. It selects all direct children of the issue with `id = 1`. The `root_child_id` is set to the `id` of the direct child.
 
--   **`UNION ALL`**: This combines the results of the starting query with the results of the recursive part of the query.
+- **`UNION ALL`**: This combines the results of the starting query with the results of the recursive part of the query.
 
--   **`SELECT i.id, i.parent_issue_id, i.status_id, d.root_child_id FROM issue i JOIN all_descendants d ON i.parent_issue_id = d.id`**: This is the recursive part. It finds all children of the issues that were found in the previous step, and it keeps the `root_child_id` from the previous step.
+- **`SELECT i.id, i.parent_issue_id, i.status_id, d.root_child_id FROM issue i JOIN all_descendants d ON i.parent_issue_id = d.id`**: This is the recursive part. It finds all children of the issues that were found in the previous step, and it keeps the `root_child_id` from the previous step.
 
--   **`SELECT DISTINCT root_child_id FROM all_descendants WHERE status_id IN (1, 2)`**: This is the final query. It selects the unique `root_child_id`s of all the descendant issues that have a `status_id` of `1` or `2` (which we are considering as "uncompleted").
+- **`SELECT DISTINCT root_child_id FROM all_descendants WHERE status_id IN (1, 2)`**: This is the final query. It selects the unique `root_child_id`s of all the descendant issues that have a `status_id` of `1` or `2` (which we are considering as "uncompleted").
 
 In simple terms, the query starts with a parent issue, finds all its children, then finds all of their children, and so on. Then it filters out only the "uncompleted" ones and tells you which of the direct children of the original parent have uncompleted tasks down the line.
